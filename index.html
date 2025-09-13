@@ -24,11 +24,85 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
       position: relative;
     }
 
+    /* HEADER */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.85);
+      border-bottom: 1px solid #ff0033;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 0 12px rgba(255,0,51,0.7);
+    }
+
+    .menu-btn {
+      font-size: 22px;
+      cursor: pointer;
+      margin-right: 12px;
+      color: #fff;
+    }
+
+    .header-title {
+      font-family: "Poppins", Arial, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ff0033;
+      text-shadow: 0 0 10px #ff0033;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.95);
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+      z-index: 2000;
+    }
+
+/* Sidebar style */
+.sidebar a {
+  display: block;
+  padding: 12px 20px;
+  color: #fff;
+  text-decoration: none;
+  font-family: "Poppins", Arial, sans-serif;  /* ⬅️ Ganti font sidebar di sini */
+  font-size: 15px;                            /* Ukuran font */
+  font-weight: 500;                           /* Tebal font */
+  transition: background 0.3s;
+}
+
+.sidebar a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+    .sidebar a:hover {
+      background: #111;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* CARD */
     .card {
+      margin-top: 120px; /* biar gak ketutup header */
       background: rgba(0, 0, 0, 0.7);
       border: 1px solid rgba(138, 3, 3, 0.5);
       backdrop-filter: blur(8px);
@@ -36,21 +110,14 @@
       border-radius: 20px;
       width: 100%;
       max-width: 400px;
-      z-index: 2;
       text-align: center;
       box-shadow: 0 0 25px rgba(138, 3, 3, 0.6);
       animation: fadeIn 1s ease;
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .icon {
@@ -62,7 +129,7 @@
 
     .title {
       font-size: 36px;
-      font-family: 'Nosifer', cursive;
+      font-family: 'Orbitron', sans-serif;
       color: #8A0303;
       text-shadow: 0 0 10px #000, 0 0 18px #5c0000;
       margin-bottom: 8px;
@@ -103,17 +170,24 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 16px rgba(138, 3, 3, 0.7);
     }
-
-    .footer {
-      margin-top: 28px;
-      font-size: 11px;
-      color: #8A0303;
-      font-family: Arial, sans-serif;
-    }
   </style>
 </head>
 
 <body>
+  <!-- HEADER -->
+  <div class="header">
+    <span class="menu-btn" onclick="openSidebar()">☰</span>
+    <span class="header-title">NEFARIOUS</span>
+  </div>
+
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar">
+  <span class="close-btn" onclick="closeSidebar()">&times;</span>
+  
+  <a href="#"><i class="fas fa-home"></i> Home</a>
+</div>
+
+  <!-- CARD -->
   <div class="card">
     <i class="fas fa-satellite-dish icon"></i>
     <div class="title">Status Ping</div>
@@ -128,6 +202,13 @@
   </div>
 
   <script>
+    function openSidebar() {
+      document.getElementById("sidebar").style.width = "250px";
+    }
+    function closeSidebar() {
+      document.getElementById("sidebar").style.width = "0";
+    }
+
     async function checkPing() {
       const pingValue = document.getElementById("pingValue");
       pingValue.textContent = "⏳ Checking...";
