@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Status Ping</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Nosifer&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: black url('/assets/bg.jpg') center center/cover no-repeat;
+      color: #B22222;
+      font-family: 'UnifrakturCook', cursive;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(138, 3, 3, 0.5);
+      backdrop-filter: blur(8px);
+      padding: 30px 24px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 400px;
+      z-index: 2;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(138, 3, 3, 0.6);
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .icon {
+      font-size: 50px;
+      color: #8A0303;
+      margin-bottom: 16px;
+      text-shadow: 0 0 15px rgba(138, 3, 3, 0.9);
+    }
+
+    .title {
+      font-size: 36px;
+      font-family: 'Nosifer', cursive;
+      color: #8A0303;
+      text-shadow: 0 0 10px #000, 0 0 18px #5c0000;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #B22222;
+      font-family: 'Lato', sans-serif;
+      margin-bottom: 25px;
+      text-shadow: 0 0 6px rgba(138, 3, 3, 0.7);
+    }
+
+    .ping-value {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #fff;
+      text-shadow: 0 0 12px #B22222;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 15px;
+      background: linear-gradient(135deg, #8A0303, #000);
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-shadow: 0 0 6px #8A0303, 0 0 10px #5c0000;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(138, 3, 3, 0.7);
+    }
+
+    .footer {
+      margin-top: 28px;
+      font-size: 11px;
+      color: #8A0303;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <i class="fas fa-satellite-dish icon"></i>
+    <div class="title">Status Ping</div>
+    <div class="subtitle">Cek koneksi server secara realtime</div>
+
+    <div id="pingValue" class="ping-value">-- ms</div>
+    <button id="checkPing">
+      <i class="fas fa-biohazard" style="margin-right: 8px;"></i>
+      Cek Ping
+      <i class="fas fa-biohazard" style="margin-left: 8px;"></i>
+    </button>
+  </div>
+
+  <script>
+    async function checkPing() {
+      const pingValue = document.getElementById("pingValue");
+      pingValue.textContent = "⏳ Checking...";
+      const start = Date.now();
+      try {
+        await fetch("https://www.google.com", { mode: "no-cors" });
+        const ms = Date.now() - start;
+        pingValue.textContent = "✅ " + ms + " ms";
+      } catch {
+        pingValue.textContent = "❌ Ping failed";
+      }
+    }
+
+    document.getElementById("checkPing").addEventListener("click", checkPing);
+  </script>
+</body>
+</html>
